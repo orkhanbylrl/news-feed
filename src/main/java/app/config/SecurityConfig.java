@@ -35,9 +35,14 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
+                .authorizeRequests()
+                .requestMatchers("/user/reg")
+                .permitAll()
+                .and()
                 .formLogin()
-                .loginPage("index")
+                .loginPage("/user/login")
                 .permitAll();
+
 
         return http.build();
     }
@@ -46,4 +51,6 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
