@@ -11,7 +11,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "user_table")
 public class User {
-    // new
+    // niuuuuuu
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
