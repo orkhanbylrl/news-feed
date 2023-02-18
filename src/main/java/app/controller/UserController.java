@@ -11,11 +11,13 @@ public class UserController {
 
     @GetMapping("login")
     public ModelAndView login_page(){
+
         return new ModelAndView("index");
     }
 
     @GetMapping("reg")
     public ModelAndView register_page(){
+
         return new ModelAndView("registration");
     }
 }
