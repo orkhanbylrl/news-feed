@@ -33,10 +33,10 @@ public class SecurityConfig {
 //        return new InMemoryUserDetailsManager(user1, user2, admin);
 //    }
 
-    @Bean
-    protected void configure(AuthenticationManagerBuilder auth){
-
-    }
+//    @Bean
+//    protected void configure(AuthenticationManagerBuilder auth){
+//
+//    }
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
