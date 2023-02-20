@@ -17,26 +17,26 @@
     <div class="registration-section-container">
         <h1 class="registration-section-container-title">Create An Account</h1>
         <p class="registration-section-container-description">Create your account, it takes less than a minute. If you already have an account - <a href="./index.html" class="registration-section-container-description-link">login</a></p>
-        <form action="" class="registration-section-container-form">
+        <form action="" class="registration-section-container-form" th:action="@{/user/handle_reg}" th:object="${userReg}" method="post">
             <div class="registration-section-container-form-input-wrapper">
                 <img class="box-icons" src="./img/user-icon.svg" alt="User Icon">
                 <label for="full-name"></label>
-                <input class="registration-section-container-form-input" id="full-name" placeholder="Full name" type="text">
+                <input class="registration-section-container-form-input" id="full-name" placeholder="Full name" type="text" th:field="*{fullName}">
             </div>
             <div class="registration-section-container-form-input-wrapper">
                 <img class="box-icons" src="./img/mail-icon.svg" alt="User Icon">
                 <label for="email"></label>
-                <input class="registration-section-container-form-input" id="email" placeholder="Email address" type="email">
+                <input class="registration-section-container-form-input" id="email" placeholder="Email address" type="email" th:field="*{email}">
             </div>
             <div class="registration-section-container-form-input-wrapper">
                 <img class="box-icons" src="./img/lock-icon.svg" alt="User Icon">
                 <label for="password"></label>
-                <input class="registration-section-container-form-input" id="password" placeholder="Password" type="password">
+                <input class="registration-section-container-form-input" id="password" placeholder="Password" type="password" th:field="*{password}">
             </div>
             <div class="registration-section-container-form-input-wrapper mb0">
                 <img class="box-icons" src="./img/lock-icon.svg" alt="User Icon">
                 <label for="confirm-password"></label>
-                <input class="registration-section-container-form-input" id="confirm-password" placeholder="Confirm Password" type="password">
+                <input class="registration-section-container-form-input" id="confirm-password" placeholder="Confirm Password" type="password" th:field="*{repPassword}">
             </div>
             <input type="submit" value="Create account" class="registration-section-container-form-submit">
         </form>

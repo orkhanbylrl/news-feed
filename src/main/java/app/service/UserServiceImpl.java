@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, UserService {
 
     private final UserRepository repo;
 
@@ -22,5 +22,15 @@ public class UserServiceImpl implements UserDetailsService {
         Optional<User> user = repo.findUserByFullName(fullName);
 
         return user.map(UserDetailsImpl::new).orElseThrow(() -> new UsernameNotFoundException(""));
+    }
+
+    @Override
+    public void saveUser(User user) {
+        repo.save(user);
+    }
+
+    @Override
+    public Optional<User> getUser(String fullName) {
+        return repo.findUserByFullName(fullName);
     }
 }
