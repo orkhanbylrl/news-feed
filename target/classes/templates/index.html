@@ -17,7 +17,7 @@
 <!--        <img src="img/Union.png">-->
         <h1 class="login-section-container-title">Welcome Back!</h1>
         <p class="login-section-container-description">To keep connected with us please login with personal information by email address and password</p>
-        <form action="#"  th:action="@{/user/handle_login}" class="login-section-container-form" th:object="${userRq}" method="post" >
+        <form action="#"  th:action="@{/user/handle_login}" class="login-section-container-form"  th:object="${userLog}" method="post" >
             <div class="login-section-container-form-input-wrapper">
                 <img class="input-icons" src="./img/mail-icon.svg" alt="User Icon">
                 <label for="email"></label>
@@ -38,7 +38,7 @@
                 <a th:href="@{./forgot-password.html}" class="login-section-container-options-link">Forgot password?</a>
             </div>
             <div class="login-section-form-buttons">
-                <a th:href="@{./main-page.html}" class="login-section-container-form-login">Login now</a>
+                <input  class="login-section-container-form-login" type="submit" value="Login now">
                 <a th:href="@{./registration.html}" class="login-section-container-form-signup">Create account</a>
             </div>
             <div class="login-section-form-social">
@@ -54,7 +54,7 @@
                     <a th:href="@{#}" class="login-section-form-social-icon mr0"><img src="./img/twitter.svg" alt="Twitter"></a>
                 </div>
             </div>
-            <input type="submit">
+<!--            <input type="submit">-->
         </form>
     </div>
 </section>
