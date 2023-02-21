@@ -21,7 +21,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public UserDetails loadUserByUsername(String fullName) throws UsernameNotFoundException {
         Optional<User> user = repo.findUserByFullName(fullName);
 
-        return user.map(UserDetailsImpl::new).orElseThrow(() -> new UsernameNotFoundException(""));
+        return user.map(UserDetailsImpl::new)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("username %s doesn't exist", fullName)));
     }
 
     @Override
@@ -33,4 +34,16 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public Optional<User> getUser(String fullName) {
         return repo.findUserByFullName(fullName);
     }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return repo.findUserByEmail(email);
+    }
+
+    @Override
+    public Boolean isUserExist(String email) {
+        return repo.existsUserByEmail(email);
+    }
+
+
 }

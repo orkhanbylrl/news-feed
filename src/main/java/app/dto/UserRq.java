@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Data
 public class UserRq {
-//    private final String fullName;
+    String fullName;
     String email;
     String password;
 }

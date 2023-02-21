@@ -19,6 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String fullName;
+    @Column(unique = true)
     private String email;
     private String password;
     private List<String> roles = new ArrayList<>();

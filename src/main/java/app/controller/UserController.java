@@ -1,8 +1,10 @@
 package app.controller;
 
+import app.dto.UserLoginForm;
 import app.dto.UserRegForm;
 import app.dto.UserRq;
 import app.entity.User;
+import app.service.UserService;
 import app.service.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,17 +23,22 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @GetMapping("login")
     public String login_page(Model model){
-        model.addAttribute("userRq", new UserRq());
+        model.addAttribute("userLog", new UserLoginForm());
         return "index";
     }
 
     @PostMapping("handle_login")
-    public void handle_login(@ModelAttribute UserRq userRq, Model model){
+    public String handle_login(@ModelAttribute @Valid UserLoginForm userLog, BindingResult result, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("userLog", new UserLoginForm());
+            return "index";
+        }
 
+        return "redirect:/url that will be redirected after login";
     }
 
     @GetMapping("reg")
@@ -42,8 +49,7 @@ public class UserController {
 
     @PostMapping("handle_reg")
     public String handle_register(@ModelAttribute @Valid UserRegForm userReg, BindingResult result, Model model){
-        System.out.println(userReg);
-        if(result.hasErrors()){
+        if(result.hasErrors() || userService.isUserExist(userReg.getEmail())){
             model.addAttribute("userReg", new UserRegForm());
             return "registration";
         }
