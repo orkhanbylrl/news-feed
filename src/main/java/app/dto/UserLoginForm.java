@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class UserLoginForm {
-
     @NotBlank
     String email;
     @NotBlank

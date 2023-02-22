@@ -8,6 +8,7 @@ import app.service.UserService;
 import app.service.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ import java.util.Arrays;
 public class UserController {
 
     private final UserService userService;
+    private final PasswordEncoder encoder;
 
     @GetMapping("login")
     public String login_page(Model model){
@@ -33,12 +35,18 @@ public class UserController {
 
     @PostMapping("handle_login")
     public String handle_login(@ModelAttribute @Valid UserLoginForm userLog, BindingResult result, Model model){
+        System.out.println(userLog);
         if(result.hasErrors()){
             model.addAttribute("userLog", new UserLoginForm());
             return "index";
         }
 
-        return "redirect:/url that will be redirected after login";
+        return "redirect:/user/ok";
+    }
+
+    @GetMapping("ok")
+    public String ok_handle(){
+        return "ok";
     }
 
     @GetMapping("reg")
@@ -54,7 +62,7 @@ public class UserController {
             return "registration";
         }
 
-        User created = new User(userReg.getFullName(), userReg.getEmail(), userReg.getPassword(),
+        User created = new User(userReg.getFullName(), userReg.getEmail(), encoder.encode(userReg.getPassword()),
                 Arrays.asList("USER"));
 
         userService.saveUser(created);

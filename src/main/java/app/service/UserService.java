@@ -8,9 +8,8 @@ import java.util.Optional;
 
 public interface UserService {
     void saveUser(User user);
-    Optional<User> getUser(String fullName);
-    UserDetails loadUserByUsername(String fullName);
-    Optional<User> getUserByEmail(String email);
+    Optional<User> getUser(String email);
+    UserDetails loadUserByUsername(String email);
     Boolean isUserExist(String email);
 
 }
