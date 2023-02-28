@@ -13,4 +13,5 @@ public class AppController {
     public RedirectView getting_login(){
         return new RedirectView("user/login");
     }
+
 }

@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         return user.map(UserDetailsImpl::new)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("user %s doesn't exist", email)));
+
     }
 
     @Override

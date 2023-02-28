@@ -74,15 +74,18 @@ public class SecurityConfig {
                 .requestMatchers("/user/reg")
                 .permitAll()
                 .and()
+
                 .formLogin()
                 .loginPage("/user/login")
                 .usernameParameter("email")
                 .loginProcessingUrl("/user/handle_login")
                 .defaultSuccessUrl("/user/ok");
+
         return http.build();
     }
 
     @Bean
+
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
@@ -92,6 +95,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
@@ -99,5 +103,6 @@ public class SecurityConfig {
         auth.setUserDetailsService(userDetailsService);
         return auth;
     }
+
 
 }
