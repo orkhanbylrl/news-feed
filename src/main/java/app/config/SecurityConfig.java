@@ -74,12 +74,11 @@ public class SecurityConfig {
                 .requestMatchers("/user/reg")
                 .permitAll()
                 .and()
-
                 .formLogin()
                 .loginPage("/user/login")
                 .usernameParameter("email")
                 .loginProcessingUrl("/user/handle_login")
-                .defaultSuccessUrl("/user/ok");
+                .defaultSuccessUrl("/news_feed");
 
         return http.build();
     }
