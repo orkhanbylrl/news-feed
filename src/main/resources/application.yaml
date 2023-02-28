@@ -1,0 +1,12 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/news_feed
+    username: postgres
+    password: eden258
+
+  jpa:
+    generate-ddl: true
+    show-sql: true
