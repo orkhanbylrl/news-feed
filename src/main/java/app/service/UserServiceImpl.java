@@ -18,11 +18,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository repo;
 
     @Override
-    public UserDetails loadUserByUsername(String fullName) throws UsernameNotFoundException {
-        Optional<User> user = repo.findUserByFullName(fullName);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<User> user = repo.findUserByEmail(email);
 
         return user.map(UserDetailsImpl::new)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("username %s doesn't exist", fullName)));
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("user %s doesn't exist", email)));
+
     }
 
     @Override
@@ -31,12 +32,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public Optional<User> getUser(String fullName) {
-        return repo.findUserByFullName(fullName);
-    }
-
-    @Override
-    public Optional<User> getUserByEmail(String email) {
+    public Optional<User> getUser(String email) {
         return repo.findUserByEmail(email);
     }
 
