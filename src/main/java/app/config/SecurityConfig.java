@@ -64,10 +64,12 @@ public class SecurityConfig {
                     .loginProcessingUrl("/user/login")
                     .successForwardUrl("/user/ok")
                     .permitAll());
+
         return http.build();
     }
 
     @Bean
+
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
@@ -77,6 +79,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
@@ -84,5 +87,6 @@ public class SecurityConfig {
         auth.setUserDetailsService(userDetailsService);
         return auth;
     }
+
 
 }

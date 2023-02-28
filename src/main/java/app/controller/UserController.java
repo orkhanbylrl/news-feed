@@ -2,13 +2,12 @@ package app.controller;
 
 import app.dto.UserLoginForm;
 import app.dto.UserRegForm;
-import app.dto.UserRq;
+
 import app.entity.User;
 import app.service.UserService;
-import app.service.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,28 +24,28 @@ import java.util.Arrays;
 public class UserController {
 
     private final UserService userService;
+
     private final PasswordEncoder encoder;
+
 
     @GetMapping("login")
     public String login_page(Model model){
         model.addAttribute("userLog", new UserLoginForm());
-        return "index";
+
+        return "login";
+
     }
 
     @PostMapping("handle_login")
     public String handle_login(@ModelAttribute @Valid UserLoginForm userLog, BindingResult result, Model model){
-        System.out.println(userLog);
+
         if(result.hasErrors()){
             model.addAttribute("userLog", new UserLoginForm());
-            return "index";
+            return "login";
         }
 
-        return "redirect:/user/ok";
-    }
+        return "redirect:/news_feed";
 
-    @GetMapping("ok")
-    public String ok_handle(){
-        return "ok";
     }
 
     @GetMapping("reg")
@@ -60,9 +59,10 @@ public class UserController {
         if(result.hasErrors() || userService.isUserExist(userReg.getEmail())){
             model.addAttribute("userReg", new UserRegForm());
             return "registration";
-        }
+       
+        User created = new User(userReg.getFullName(), userReg.getEmail(), userReg.getPassword(),
+        
 
-        User created = new User(userReg.getFullName(), userReg.getEmail(), encoder.encode(userReg.getPassword()),
                 Arrays.asList("USER"));
 
         userService.saveUser(created);
