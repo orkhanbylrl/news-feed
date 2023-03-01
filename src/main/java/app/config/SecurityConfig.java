@@ -43,13 +43,30 @@ public class SecurityConfig {
 //        return new InMemoryUserDetailsManager(user1, user2, admin);
 //    }
 
+
+
 //    @Bean
-//    protected void configure(AuthenticationManagerBuilder auth){
+//    protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
 //
+//        http.csrf().disable()
+//                .authorizeRequests()
+//                .requestMatchers("/user/ok").authenticated()
+//                .requestMatchers("/user/reg")
+//                .permitAll()
+//                .and()
+//                .userDetailsService(userDetailsService)
+//                .formLogin(form -> form
+//                    .loginPage("/user/login")
+//                    .usernameParameter("email")
+//                    .loginProcessingUrl("/user/login")
+//                    .successForwardUrl("/user/ok")
+//                    .permitAll());
+//        return http.build();
 //    }
 
     @Bean
-    protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // http builder configurations for authorize requests and form login (see below)
 
         http.csrf().disable()
                 .authorizeRequests()
@@ -57,13 +74,11 @@ public class SecurityConfig {
                 .requestMatchers("/user/reg")
                 .permitAll()
                 .and()
-                .userDetailsService(userDetailsService)
-                .formLogin(form -> form
-                    .loginPage("/user/login")
-                    .usernameParameter("email")
-                    .loginProcessingUrl("/user/login")
-                    .successForwardUrl("/user/ok")
-                    .permitAll());
+                .formLogin()
+                .loginPage("/user/login")
+                .usernameParameter("email")
+                .loginProcessingUrl("/user/handle_login")
+                .defaultSuccessUrl("/news_feed");
 
         return http.build();
     }
