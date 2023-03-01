@@ -60,7 +60,7 @@ public class UserController {
             model.addAttribute("userReg", new UserRegForm());
             return "registration";
         }
-       
+
         User created = new User(userReg.getFullName(), userReg.getEmail(), encoder.encode(userReg.getPassword()),
                 Arrays.asList("USER"));
 
