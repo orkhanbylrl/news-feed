@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import app.entity.Article;
+
+import java.util.ArrayList;
 
 @Log4j2
 @Controller
@@ -22,6 +24,8 @@ public class ArticlesController {
 
     @GetMapping("/news_feed")
     public String showDesignForm(Model model) {
+
+        model.addAttribute("article", new Article());
         return "main-page";
     }
 
