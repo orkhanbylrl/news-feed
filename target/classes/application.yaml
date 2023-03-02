@@ -9,3 +9,7 @@ spring:
   jpa:
     generate-ddl: true
     show-sql: true
+
+
+  mvc:
+    static-path-pattern: /static/**
