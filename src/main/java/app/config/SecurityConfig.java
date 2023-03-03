@@ -25,43 +25,6 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsService() {
-//        UserDetails user1 = User.withUsername("user1")
-//                .password(passwordEncoder().encode("user1Pass"))
-//                .roles("USER")
-//                .build();
-//        UserDetails user2 = User.withUsername("user2")
-//                .password(passwordEncoder().encode("user2Pass"))
-//                .roles("USER")
-//                .build();
-//        UserDetails admin = User.withUsername("admin")
-//                .password(passwordEncoder().encode("adminPass"))
-//                .roles("ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(user1, user2, admin);
-//    }
-
-
-
-//    @Bean
-//    protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
-//
-//        http.csrf().disable()
-//                .authorizeRequests()
-//                .requestMatchers("/user/ok").authenticated()
-//                .requestMatchers("/user/reg")
-//                .permitAll()
-//                .and()
-//                .userDetailsService(userDetailsService)
-//                .formLogin(form -> form
-//                    .loginPage("/user/login")
-//                    .usernameParameter("email")
-//                    .loginProcessingUrl("/user/login")
-//                    .successForwardUrl("/user/ok")
-//                    .permitAll());
-//        return http.build();
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -70,14 +33,17 @@ public class SecurityConfig {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/user/reg")
+                .requestMatchers("/user/**")
                 .permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/user/login")
                 .usernameParameter("email")
                 .loginProcessingUrl("/user/handle_login")
                 .defaultSuccessUrl("/news_feed")
+                .permitAll()
                 .and()
                 .logout()
                 .permitAll()
