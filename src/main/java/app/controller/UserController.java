@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Arrays;
 
 @Controller
-@RequestMapping("user")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -28,34 +28,34 @@ public class UserController {
     private final PasswordEncoder encoder;
 
 
-    @GetMapping("login")
+    @GetMapping("/login")
     public String login_page(Model model){
         model.addAttribute("userLog", new UserLoginForm());
-
-        return "index";
-
+        return "login";
     }
 
-    @PostMapping("handle_login")
-    public String handle_login(@ModelAttribute @Valid UserLoginForm userLog, BindingResult result, Model model){
+//    @PostMapping("/handle_login")
+//    public String handle_login(@ModelAttribute @Valid UserLoginForm userLog, BindingResult result, Model model){
+//        System.out.println(userLog);
+//        System.out.println("handle_login");
+//        if(result.hasErrors()){
+//            model.addAttribute("userLog", new UserLoginForm());
+//            return "login";
+//        }
+//        return "a";
+////        return "redirect:/news_feed";
+//    }
 
-        if(result.hasErrors()){
-            model.addAttribute("userLog", new UserLoginForm());
-            return "index";
-        }
-
-        return "redirect:/news_feed";
-
-    }
-
-    @GetMapping("reg")
+    @GetMapping("/reg")
     public String register_page(Model model){
         model.addAttribute("userReg", new UserRegForm());
         return "registration";
     }
 
-    @PostMapping("handle_reg")
+    @PostMapping("/handle_reg")
     public String handle_register(@ModelAttribute @Valid UserRegForm userReg, BindingResult result, Model model){
+        System.out.println(userReg);
+        System.out.println("handle_register");
         if(result.hasErrors() || userService.isUserExist(userReg.getEmail())) {
             model.addAttribute("userReg", new UserRegForm());
             return "registration";
@@ -63,11 +63,19 @@ public class UserController {
        
         User created = new User(userReg.getFullName(), userReg.getEmail(), encoder.encode(userReg.getPassword()),
                 Arrays.asList("USER"));
-
         userService.saveUser(created);
 
         return "redirect:/user/login";
     }
 
+
+    @GetMapping("/forgot_pass")
+    public String forgot_pass(Model model){
+        return "forgot-password";
+    }
+
+    @PostMapping("/forgot_handler")
+    public void forgot_handler(){
+    }
 
 }
