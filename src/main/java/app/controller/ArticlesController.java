@@ -27,7 +27,6 @@ public class ArticlesController {
 
     @GetMapping("/news_feed")
     public String showDesignForm(Model model) {
-        model.addAttribute("articles", new ArrayList<>());
         return "main-page";
     }
 
