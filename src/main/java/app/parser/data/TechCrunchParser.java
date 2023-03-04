@@ -18,6 +18,8 @@ public class TechCrunchParser implements JsoupParser {
 
     List<Article> articles = new ArrayList<>();
 
+
+
     @Override
     public List<Article> getArticles() {
         try{

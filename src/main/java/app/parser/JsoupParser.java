@@ -13,8 +13,6 @@ import java.util.List;
 
 public interface JsoupParser  {
 
-
-
     List<Article> getArticles();
 
     default LocalDate convertStringToDate(String s, DateTimeFormatter formatter){
