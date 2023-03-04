@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/news_feed
+    username: postgres
+    password: postgres
+
+  jpa:
+    generate-ddl: true
+    show-sql: true
+
+
+  mvc:
+    static-path-pattern: /static/**
