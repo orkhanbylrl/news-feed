@@ -13,8 +13,6 @@ import java.util.List;
 
 public interface JsoupParser  {
 
-    DateTimeFormats dateTimeForm=new DateTimeFormats();
-
     List<Article> getArticles();
 
     default LocalDate convertStringToDate(String s, DateTimeFormatter formatter){
@@ -30,8 +28,8 @@ public interface JsoupParser  {
         Document doc =null;
         try {
             doc = Jsoup.connect(url)
-                    .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
-                    .timeout(300000) // 5 minutes
+                    .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0)")
+                    .timeout(300000)
                     .referrer("http://www.google.com")
                     .get();
         } catch (NullPointerException e) {

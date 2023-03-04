@@ -1,9 +1,12 @@
 package app.controller;
 
+import app.entity.Article;
 import app.service.ArticleService;
 import app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.jsoup.Jsoup;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +15,9 @@ import app.entity.Article;
 
 import java.util.ArrayList;
 
-@Log4j2
+import java.io.IOException;
+import java.util.ArrayList;
+
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
@@ -28,5 +33,6 @@ public class ArticlesController {
         model.addAttribute("article", new Article());
         return "main-page";
     }
+
 
 }

@@ -1,17 +1,20 @@
 package app.parser;
 
-import app.parser.data.HabrParser;
+import app.parser.data.TechCrunchParser;
 
 public enum Website {
-    Habr(new HabrParser());
+    TechCrunch(new TechCrunchParser());
 
     public final JsoupParser parser;
 
+
     Website(JsoupParser parser ) {
         this.parser = parser;
+
     }
 
     public JsoupParser getParser() {
         return this.parser;
     }
+
 }
