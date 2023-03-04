@@ -1,10 +1,12 @@
 package app.controller;
 
+import app.config.jwt.JwtService;
 import app.dto.UserLoginForm;
 import app.dto.UserRegForm;
 
 import app.entity.User;
 import app.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +28,7 @@ public class UserController {
 
     private final UserService userService;
     private final PasswordEncoder encoder;
+    private final JwtService jwtService;
 
 
     @GetMapping("/login")
@@ -34,17 +37,19 @@ public class UserController {
         return "login";
     }
 
-//    @PostMapping("/handle_login")
-//    public String handle_login(@ModelAttribute @Valid UserLoginForm userLog, BindingResult result, Model model){
-//        System.out.println(userLog);
-//        System.out.println("handle_login");
-//        if(result.hasErrors()){
-//            model.addAttribute("userLog", new UserLoginForm());
-//            return "login";
-//        }
+    @PostMapping("/handle_login")
+    public String handle_login(@ModelAttribute @Valid UserLoginForm userLog, BindingResult result, Model model, HttpSession session){
+        System.out.println(userLog);
+        System.out.println("handle_login");
+        if(result.hasErrors()){
+            model.addAttribute("userLog", new UserLoginForm());
+            return "login";
+        }
 //        return "a";
-////        return "redirect:/news_feed";
-//    }
+//        var token = jwtService.generateToken(userService.loadUserByUsername(userLog.getEmail()));
+//        session.setAttribute("JSESSIONID", token);
+        return "redirect:/news_feed";
+    }
 
     @GetMapping("/reg")
     public String register_page(Model model){
