@@ -1,4 +1,4 @@
-package app.parser;
+package app.parser.data;
 import app.entity.Article;
 import app.parser.JsoupParser;
 import app.parser.Website;

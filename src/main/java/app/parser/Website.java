@@ -1,5 +1,7 @@
 package app.parser;
 
+import app.parser.data.TechCrunchParser;
+
 public enum Website {
     TechCrunch(new TechCrunchParser());
 
