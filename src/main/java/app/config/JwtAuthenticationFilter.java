@@ -6,9 +6,11 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -24,21 +26,32 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserService userService;
 
+
     @Override
     protected void doFilterInternal(
             @NotNull HttpServletRequest rq,
             @NotNull HttpServletResponse rs,
             @NotNull FilterChain filterChain) throws ServletException, IOException {
 
-        final String authHeader = rq.getHeader("Authorization");
+
+        HttpSession session = rq.getSession();
+        final String authHeader = (String) session.getAttribute("Authorization");
+        Authentication auth = (Authentication) session.getAttribute("auth");
         final String jwt;
         final String userEmail;
+
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(rq, rs);
             return;
         }
+
+        if(auth != null){
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
+
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
+
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() != null) {
             UserDetails userDetails = this.userService.loadUserByUsername(userEmail);
             if(jwtService.validateToken(jwt, userDetails)){
