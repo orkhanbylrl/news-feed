@@ -59,7 +59,6 @@ public class UserController {
 
         String token;
 
-
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 userLog.getEmail(),
                 userLog.getPassword()
@@ -72,7 +71,6 @@ public class UserController {
             session.setAttribute("Authorization", "Bearer " + token);
             session.setAttribute("auth", authenticate);
         }
-
 
         return "redirect:/news_feed";
     }
@@ -108,5 +106,8 @@ public class UserController {
     @PostMapping("/forgot_handler")
     public void forgot_handler(){
     }
+
+
+
 
 }

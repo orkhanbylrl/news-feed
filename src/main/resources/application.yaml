@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/news_feed
     username: postgres
-    password: eden258
+    password: postgres
 
   jpa:
     generate-ddl: true
