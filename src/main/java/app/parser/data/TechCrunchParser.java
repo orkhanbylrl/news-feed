@@ -1,4 +1,5 @@
 package app.parser.data;
+
 import app.entity.Article;
 import app.parser.JsoupParser;
 import app.parser.Website;
@@ -6,9 +7,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +22,7 @@ public class TechCrunchParser implements JsoupParser {
 
 
     @Override
+    @Scheduled(fixedDelay = 10000)
     public List<Article> getArticles() {
         try{
             Document doc = Jsoup.connect("https://techcrunch.com/category/startups/").get();
