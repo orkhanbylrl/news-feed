@@ -8,13 +8,13 @@
 <body>
 
 <header class="main-header">
-    <a href="/news_feed" class="main-header-logo"><img src="/img/Group%2012.png" alt="IBA Tech Academy"></a>
+    <a href="/news_feed" class="main-header-logo"><img th:src="@{../static/img/Group%2012.png}" alt="IBA Tech Academy"></a>
 
     <div class="main-header-wrapper">
         <label class="main-header-search-wrapper">
             <form th:action="@{/news_feed}" method="get">
                 <input type="text" class="main-header-search" name="keyword" placeholder="Press Enter">
-                <img src="/img/search-icon.svg" alt="Search Icon">
+                <img th:src="@{../static/img/search-icon.svg}" alt="Search Icon">
             </form>
 
         </label>
@@ -24,7 +24,7 @@
                 <span class="main-header-profile-welcome">Welcome,</span>
                 <span class="main-header-username" th:text="${username}"></span>
             </div>
-            <img class="main-header-user-icon" th:src="${imageAsBase64}" alt="User Icon">
+            <img class="main-header-user-icon" th:src="@{../static/img/user-icon.svg}" alt="User Icon">
             <div class="hidden-accordion-wrapper">
                 <ul class="hidden-accordion">
                     <li class="hidden-accordion-item"><img th:src="@{../static/img/favourite-icon.svg}" alt="Favourite Icon"><a
