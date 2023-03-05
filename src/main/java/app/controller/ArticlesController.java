@@ -12,11 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import app.entity.Article;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -26,13 +28,12 @@ public class ArticlesController {
     private final UserService userService;
 
 
-
     @GetMapping("/news_feed")
-    public String showDesignForm(Model model) {
-
-        model.addAttribute("article", new Article());
+    public String getArticles(Model model){
+        model.addAttribute("articles", new ArrayList<>());
         return "main-page";
     }
+
 
 
 }
