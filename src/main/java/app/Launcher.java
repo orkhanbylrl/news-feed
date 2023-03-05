@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class Launcher {
     public static void main(String[] args) {
-        // aa
+        // aaa
         SpringApplication.run(Launcher.class, args);
     }
 }
