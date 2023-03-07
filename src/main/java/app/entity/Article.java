@@ -7,19 +7,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 public class Article {
-    @Column(name="header")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private String header;
 
     @Column(name="content",columnDefinition="TEXT")
     private String content;
-
-    @Id
     @Column(name="article_link")
     private String articleLink;
 
@@ -27,9 +29,19 @@ public class Article {
     private String imageLink;
 
     @Column(name="article_date")
-    LocalDate date;
+    private LocalDate date;
 
     @Column(name="site")
     @Enumerated(EnumType.STRING)
     private Website site;
+
+
+    public Article(String header, String content, String articleLink, String imageLink, LocalDate date, Website site) {
+        this.header = header;
+        this.content = content;
+        this.articleLink = articleLink;
+        this.imageLink = imageLink;
+        this.date = date;
+        this.site = site;
+    }
 }

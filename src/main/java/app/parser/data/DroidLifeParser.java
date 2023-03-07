@@ -38,7 +38,7 @@ public class DroidLifeParser implements JsoupParser {
                         .concat(element.select(".picture").first().select("img").first().attr("src"));
                 LocalDate date = convertStringToDate(element.select(".entry-meta__updated").text(), DateTimeFormatter.ofPattern("MMMM d, uuuu"));
 
-                articles.add(new Article(header, content, link, imageLink, date,Website.DroidLife));
+                articles.add(new Article(header, content, link, imageLink, date, Website.DroidLife));
             });
         } catch (NullPointerException e) {
         } catch (IOException e) {
