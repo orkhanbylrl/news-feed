@@ -5,12 +5,10 @@ import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
 
 
 @Data
-public class UserResPas {
+public class UserResPasForm {
     @NotNull
     @Size(min = 3, max = 10)
     private String password;

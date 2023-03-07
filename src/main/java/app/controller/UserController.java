@@ -4,10 +4,9 @@ import app.config.jwt.JwtService;
 import app.dto.UserLoginForm;
 import app.dto.UserRegForm;
 
-import app.dto.UserResPas;
-import app.entity.PasswordResetToken;
+import app.dto.UserResPasForm;
+import app.entity.PassResetToken;
 import app.entity.User;
-import app.repository.TokenRepository;
 import app.service.EmailClientService;
 import app.service.TokenService;
 import app.service.UserService;
@@ -19,14 +18,10 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,14 +52,12 @@ public class UserController {
 
     @PostMapping("/handle_login")
     public String handle_login(@ModelAttribute @Valid UserLoginForm userLog, BindingResult result, Model model, HttpSession session, HttpServletResponse rs){
-        System.out.println(userLog);
-        System.out.println("handle_login");
+        String token;
+
         if(result.hasErrors()){
             model.addAttribute("userLog", new UserLoginForm());
             return "login";
         }
-
-        String token;
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 userLog.getEmail(),
@@ -90,8 +83,7 @@ public class UserController {
 
     @PostMapping("/handle_reg")
     public String handle_register(@ModelAttribute @Valid UserRegForm userReg, BindingResult result, Model model){
-        System.out.println(userReg);
-        System.out.println("handle_register");
+
         if(result.hasErrors() || userService.isUserExist(userReg.getEmail())) {
             model.addAttribute("userReg", new UserRegForm());
             return "registration";
@@ -131,10 +123,10 @@ public class UserController {
 
     @GetMapping("/reset_password")
     public String reset_pass(@RequestParam(value = "token") String token, Model model){
-        Optional<PasswordResetToken> resetToken = tokenService.getToken(token);
+        Optional<PassResetToken> resetToken = tokenService.getToken(token);
 
         if(resetToken.isPresent() && tokenService.isValid(resetToken.get())){
-            UserResPas userResPas = new UserResPas();
+            UserResPasForm userResPas = new UserResPasForm();
             userResPas.setToken(token);
             model.addAttribute("userResPas", userResPas);
             return "reset-password";
@@ -146,9 +138,9 @@ public class UserController {
     }
 
     @PostMapping("/handle_reset")
-    public String handle_reset(@ModelAttribute @Valid UserResPas userResPas, BindingResult result, Model model){
+    public String handle_reset(@ModelAttribute @Valid UserResPasForm userResPas, BindingResult result, Model model){
         if(result.hasErrors()){
-            model.addAttribute("userResPas", new UserResPas());
+            model.addAttribute("userResPas", new UserResPasForm());
             return "reset-password";
         }
 
@@ -159,10 +151,5 @@ public class UserController {
 
         return "redirect:/user/login";
     }
-
-
-
-
-
 
 }
