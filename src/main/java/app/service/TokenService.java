@@ -13,4 +13,8 @@ public interface TokenService {
     boolean isValid(PasswordResetToken token);
 
     User getUser(String token);
+
+    Optional<PasswordResetToken> getToken(String token);
+
+    void deleteToken(User user);
 }

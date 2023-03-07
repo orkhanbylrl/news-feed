@@ -34,5 +34,15 @@ public class TokenServiceImpl implements TokenService {
         return repo.findUserByToken(token);
     }
 
+    @Override
+    public Optional<PasswordResetToken> getToken(String token) {
+        return repo.findPasswordResetTokenByToken(token);
+    }
+
+    @Override
+    public void deleteToken(User user) {
+        repo.deleteByUser(user);
+    }
+
 
 }
