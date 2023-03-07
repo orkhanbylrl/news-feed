@@ -30,7 +30,7 @@ public class TechStartupsParser implements JsoupParser {
                 String imageLink = element.getElementsByTag("img").first().attr("src");
                 LocalDate date = convertStringToDate(element.select(".post_date .post_info_date > a").text().split("Posted On ")[1], DateTimeFormatter.ofPattern("MMMM d, uuuu"));
 
-                articles.add(new Article(header, content, link, imageLink, date,Website.TechStartups));
+                articles.add(new Article(header, content, link, imageLink, date, Website.TechStartups));
             });
         } catch (NullPointerException e) {
 

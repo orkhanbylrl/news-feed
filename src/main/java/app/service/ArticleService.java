@@ -25,11 +25,11 @@ public class ArticleService {
         return articleRepository.saveAll(articles);
     }
 
-    public Page<Article> findArticleByDate(String start_date, String finish_date) {
-        LocalDate date1 = LocalDate.parse(start_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        LocalDate date2 = LocalDate.parse(finish_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        return articleRepository.findBySiteInAndDateBetweenOrderByDateDesc(date1, date2);
-    }
+//    public Page<Article> findArticleByDate(String start_date, String finish_date) {
+//        LocalDate date1 = LocalDate.parse(start_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//        LocalDate date2 = LocalDate.parse(finish_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//        return articleRepository.findBySiteInAndDateBetweenOrderByDateDesc(date1, date2);
+//    }
 
 
 

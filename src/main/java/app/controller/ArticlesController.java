@@ -21,7 +21,8 @@ import java.util.Optional;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class ArticlesController {
-    private final ArticleService articleService;
+
+//    private final ArticleService articleService;
     private final TechCrunchParser techCrunchParser;
     private final DroidLifeParser droidLifeParser;
     private final TechStartupsParser techStartupsParser;

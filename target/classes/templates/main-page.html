@@ -37,6 +37,33 @@
     </div>
 </header>
 
+<div class="container">
+
+    <form th:action="@{/news_feed/(news_start=${news_start},news_finish=${news_finish} )}" method="get">
+        <div class="row justify-content-center ">
+            <div class="col-2">
+                <p></p>
+                <input type="date" id="start" name="news_start"
+                       value="2023-03-07"
+                       min="2022-01-01" max="2023-03-08">
+                <p>Start date</p>
+            </div>
+            <div class="col-2">
+                <p></p>
+                <input type="date" id="finish" name="news_finish"
+                       value="2023-03-07"
+                       min="2022-01-01" max="2023-03-08">
+                <p>Finish date</p>
+            </div>
+            <div class="col-2">
+                <p></p>
+                <button type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
 <div class="main-section">
     <div class="tab" th:each="article : ${articleList}">
         <a class="tab-link-wrapper" th:href="${article.articleLink}">
@@ -45,6 +72,7 @@
                 <p class="tab-title" th:text="${article.header}"></p>
                 <p class="tab-description" th:text="${article.getContent()}"></p>
                 <p class="tab-tags"><a class="tab-link" th:text="${article.site}"></a></p>
+                <p class="tab-date" th:text="${#temporals.format(article.getDate(),'dd-MM-yyyy')}"></p>
             </div>
         </a>
     </div>

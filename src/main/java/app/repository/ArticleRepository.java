@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface ArticleRepository extends JpaRepository<Article,String> {
-    Page<Article> findBySiteInAndDateBetweenOrderByDateDesc(LocalDate d1, LocalDate d2);
+public interface ArticleRepository extends JpaRepository<Article, Integer> {
+//    Page<Article> findBySiteInAndDateBetweenOrderByDateDesc(LocalDate d1, LocalDate d2);
 
 }
