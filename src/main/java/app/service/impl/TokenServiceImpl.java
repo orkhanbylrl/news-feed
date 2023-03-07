@@ -1,7 +1,7 @@
 package app.service.impl;
 
 
-import app.entity.PasswordResetToken;
+import app.entity.PassResetToken;
 import app.entity.User;
 import app.repository.TokenRepository;
 import app.service.TokenService;
@@ -18,14 +18,14 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public void createToken(User user, String token) {
-        PasswordResetToken pRToken = new PasswordResetToken();
+        PassResetToken pRToken = new PassResetToken();
         pRToken.setUser(user);
         pRToken.setToken(token);
         repo.save(pRToken);
     }
 
     @Override
-    public boolean isValid(PasswordResetToken token) {
+    public boolean isValid(PassResetToken token) {
         return token.getDate().after(new Date());
     }
 
@@ -35,7 +35,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public Optional<PasswordResetToken> getToken(String token) {
+    public Optional<PassResetToken> getToken(String token) {
         return repo.findPasswordResetTokenByToken(token);
     }
 

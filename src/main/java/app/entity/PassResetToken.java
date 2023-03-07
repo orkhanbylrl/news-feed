@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PasswordResetToken {
+public class PassResetToken {
 
     private static final int EXPIRATION = 10 * 60 * 1000;
 
