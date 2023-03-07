@@ -13,3 +13,23 @@ spring:
 
   mvc:
     static-path-pattern: /static/**
+
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: mailspring794@gmail.com
+    password: mjlixaqjcmhzojdi
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+    test-connection: false
+    protocol: smtp
+
+
+  thymeleaf:
+    prefix: classpath:/templates/
