@@ -4,8 +4,14 @@ import app.config.jwt.JwtService;
 import app.dto.UserLoginForm;
 import app.dto.UserRegForm;
 
+import app.dto.UserResPas;
 import app.entity.User;
+import app.repository.TokenRepository;
+import app.service.EmailClientService;
+import app.service.TokenService;
 import app.service.UserService;
+import app.util.Utility;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +36,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import java.util.Arrays;
+import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/user")
@@ -40,7 +48,8 @@ public class UserController {
     private final PasswordEncoder encoder;
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
-
+    private final EmailClientService emailClientService;
+    private final TokenService tokenService;
 
     @GetMapping("/login")
     public String login_page(Model model){
@@ -99,13 +108,55 @@ public class UserController {
 
 
     @GetMapping("/forgot_pass")
-    public String forgot_pass(Model model){
+    public String forgot_pass(){
         return "forgot-password";
     }
 
     @PostMapping("/forgot_handler")
-    public void forgot_handler(){
+    public void forgot_handler(HttpServletRequest rq) throws MessagingException {
+
+        String email = rq.getParameter("email");
+        if(userService.isUserExist(email)){
+            System.out.println("user exists");
+            User user = userService.getUser(email).get();
+            String token = UUID.randomUUID().toString();
+
+            tokenService.createToken(user, token);
+            String link = Utility.getSiteURL(rq) + "/user/reset_password?token=" + token;
+
+            String subject = "Email for reset password";
+            String body = Utility.setBody(link);
+
+           emailClientService.sendEmailWithAttachment(email, subject, body);
+        }
     }
+
+    @GetMapping("/reset_password")
+    public String reset_pass(Model model){
+        model.addAttribute("userResPas", new UserResPas());
+        return "reset-password";
+    }
+
+    @PostMapping("/handle_reset")
+    public String handle_reset(@ModelAttribute @Valid UserResPas userResPas, BindingResult result, Model model, HttpServletRequest rq){
+        if(result.hasErrors()){
+            model.addAttribute("userResPas", new UserResPas());
+            return "reset-password";
+        }
+
+        String token = rq.getParameter("token");
+
+
+        System.out.println(token);
+
+        User u = tokenService.getUser(token);
+
+        System.out.println(u);
+
+        return "redirect:/user/login";
+    }
+
+
 
 
 
