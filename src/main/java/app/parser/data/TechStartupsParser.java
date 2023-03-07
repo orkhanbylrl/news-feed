@@ -7,6 +7,8 @@ import org.jsoup.select.Elements;
 import app.parser.Website;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +28,9 @@ public class TechStartupsParser implements JsoupParser {
                 String link = element.select(".post_header_title").first()
                         .getElementsByTag("a").first().attr("href");
                 String imageLink = element.getElementsByTag("img").first().attr("src");
+                LocalDate date = convertStringToDate(element.select(".post_date .post_info_date > a").text().split("Posted On ")[1], DateTimeFormatter.ofPattern("MMMM d, uuuu"));
 
-                articles.add(new Article(header, content, link, imageLink, Website.TechStartups));
+                articles.add(new Article(header, content, link, imageLink, date,Website.TechStartups));
             });
         } catch (NullPointerException e) {
 
