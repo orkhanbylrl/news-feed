@@ -5,6 +5,7 @@ import app.dto.UserLoginForm;
 import app.dto.UserRegForm;
 
 import app.dto.UserResPas;
+import app.entity.PasswordResetToken;
 import app.entity.User;
 import app.repository.TokenRepository;
 import app.service.EmailClientService;
@@ -29,10 +30,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Arrays;
@@ -132,26 +130,32 @@ public class UserController {
     }
 
     @GetMapping("/reset_password")
-    public String reset_pass(Model model){
-        model.addAttribute("userResPas", new UserResPas());
-        return "reset-password";
+    public String reset_pass(@RequestParam(value = "token") String token, Model model){
+        Optional<PasswordResetToken> resetToken = tokenService.getToken(token);
+
+        if(resetToken.isPresent() && tokenService.isValid(resetToken.get())){
+            UserResPas userResPas = new UserResPas();
+            userResPas.setToken(token);
+            model.addAttribute("userResPas", userResPas);
+            return "reset-password";
+        }
+        else {
+            return "noToken";
+        }
+
     }
 
     @PostMapping("/handle_reset")
-    public String handle_reset(@ModelAttribute @Valid UserResPas userResPas, BindingResult result, Model model, HttpServletRequest rq){
+    public String handle_reset(@ModelAttribute @Valid UserResPas userResPas, BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("userResPas", new UserResPas());
             return "reset-password";
         }
 
-        String token = rq.getParameter("token");
-
-
-        System.out.println(token);
-
-        User u = tokenService.getUser(token);
-
-        System.out.println(u);
+        User user = tokenService.getUser(userResPas.getToken());
+        user.setPassword(encoder.encode(userResPas.getPassword()));
+        userService.saveUser(user);
+        tokenService.deleteToken(user);
 
         return "redirect:/user/login";
     }

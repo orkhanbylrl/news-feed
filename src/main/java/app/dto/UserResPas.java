@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 
-@RequiredArgsConstructor
+
 @Data
 public class UserResPas {
     @NotNull
@@ -18,6 +18,7 @@ public class UserResPas {
     @Size(min = 3, max = 10)
     private String repPassword;
 
+    private String token;
 
     @AssertTrue(message = "Passwords should match")
     public boolean isPasswordsEqual() {
