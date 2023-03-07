@@ -16,6 +16,7 @@ import java.util.Optional;
 public class TokenServiceImpl implements TokenService {
     private final TokenRepository repo;
 
+
     @Override
     public void createToken(User user, String token) {
         PassResetToken pRToken = new PassResetToken();
@@ -36,7 +37,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Optional<PassResetToken> getToken(String token) {
-        return repo.findPasswordResetTokenByToken(token);
+        return repo.findPassResetTokenByToken(token);
     }
 
     @Override
