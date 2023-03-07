@@ -40,7 +40,7 @@ public class TechCrunchParser implements JsoupParser {
                 LocalDate date = convertStringToDate(element.select("[datetime]").text(), DateTimeFormatter.ofPattern("MMM dd, uuuu"));
 
 
-                Article article = new Article(header, content, link, image, date,Website.TechCrunch);
+                Article article = new Article(header, content, link, image, date, Website.TechCrunch);
                 articles.add(article);
             }
         } catch (IOException e) {

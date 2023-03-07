@@ -15,7 +15,7 @@ public interface TokenRepository extends JpaRepository<PassResetToken, Integer> 
     @Query("SELECT t.user FROM PassResetToken t WHERE t.token = :token")
     User findUserByToken(@Param("token") String token);
 
-    Optional<PassResetToken> findPasswordResetTokenByToken(String token);
+    Optional<PassResetToken> findPassResetTokenByToken(String token);
 
     void deleteByUser(User user);
 

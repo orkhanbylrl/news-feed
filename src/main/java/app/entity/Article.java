@@ -22,7 +22,7 @@ public class Article {
 
     @Column(name="content",columnDefinition="TEXT")
     private String content;
-    @Column(name="article_link")
+    @Column(name="article_link", unique = true)
     private String articleLink;
 
     @Column(name="image_link")
