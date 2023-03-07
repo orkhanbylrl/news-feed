@@ -11,6 +11,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +37,10 @@ public class TechCrunchParser implements JsoupParser {
                 String content = element.select(".post-block__content").text();
                 String link = Objects.requireNonNull(Objects.requireNonNull(element.select(".post-block__title").first()).select("a").first()).attr("href");
                 String image = Objects.requireNonNull(Objects.requireNonNull(element.select(".post-block__media").first()).select("img").first()).attr("src");
-                Article article = new Article(header, content, link, image, Website.TechCrunch);
+                LocalDate date = convertStringToDate(element.select("[datetime]").text(), DateTimeFormatter.ofPattern("MMM dd, uuuu"));
+
+
+                Article article = new Article(header, content, link, image, date,Website.TechCrunch);
                 articles.add(article);
             }
         } catch (IOException e) {

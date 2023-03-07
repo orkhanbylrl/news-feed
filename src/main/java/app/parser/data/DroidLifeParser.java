@@ -11,6 +11,8 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,8 +36,9 @@ public class DroidLifeParser implements JsoupParser {
                 String link = element.select(".preview__link").first().select("a").first().attr("href");
                 String imageLink = "https://www.droid-life.com/"
                         .concat(element.select(".picture").first().select("img").first().attr("src"));
+                LocalDate date = convertStringToDate(element.select(".entry-meta__updated").text(), DateTimeFormatter.ofPattern("MMMM d, uuuu"));
 
-                articles.add(new Article(header, content, link, imageLink, Website.DroidLife));
+                articles.add(new Article(header, content, link, imageLink, date,Website.DroidLife));
             });
         } catch (NullPointerException e) {
         } catch (IOException e) {
