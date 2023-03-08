@@ -72,7 +72,7 @@ public class UserController {
             session.setAttribute("auth", authenticate);
         }
 
-        return "redirect:/news_feed";
+        return "redirect:/article/news_feed";
     }
 
     @GetMapping("/reg")

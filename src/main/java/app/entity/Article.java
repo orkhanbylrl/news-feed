@@ -31,8 +31,8 @@ public class Article {
     private String imageLink;
 
 
-    @Column(name = "full_content")
-    private String fullContent;
+//    @Column(name = "full_content", columnDefinition="TEXT", length = 20000)
+//    private String fullContent;
 
     @Column(name="article_date")
     private LocalDate date;
@@ -42,12 +42,11 @@ public class Article {
     private Website site;
 
 
-    public Article(String header, String content, String articleLink, String fullContent,String imageLink, LocalDate date, Website site) {
+    public Article(String header, String content, String articleLink, String imageLink, LocalDate date, Website site) {
         this.header = header;
         this.content = content;
         this.articleLink = articleLink;
         this.imageLink = imageLink;
-        this.fullContent = fullContent;
         this.date = date;
         this.site = site;
     }

@@ -45,7 +45,7 @@ public class TechCrunchParser implements JsoupParser {
                         .get();
                 String fullContent = doc1.getElementsByClass(".article-content").text();
 
-                Article article = new Article(header, content, link, image, fullContent,date, Website.TechCrunch);
+                Article article = new Article(header, content, link, image,date, Website.TechCrunch);
                 articles.add(article);
             }
         } catch (IOException e) {

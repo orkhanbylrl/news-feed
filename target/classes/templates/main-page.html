@@ -22,7 +22,7 @@
         <div class="main-header-profile-wrapper">
             <div class="main-header-profile-credentials">
                 <span class="main-header-profile-welcome">Welcome,</span>
-                <span class="main-header-username" th:text="${username}"></span>
+                <span class="main-header-username" th:text="${user.getFullName()}"></span>
             </div>
             <img class="main-header-user-icon" th:src="@{../static/img/user-icon.svg}" alt="User Icon">
             <div class="hidden-accordion-wrapper">
@@ -37,32 +37,6 @@
     </div>
 </header>
 
-<div class="container">
-
-    <form th:action="@{/news_feed/(news_start=${news_start},news_finish=${news_finish} )}" method="get">
-        <div class="row justify-content-center ">
-            <div class="col-2">
-                <p></p>
-                <input type="date" id="start" name="news_start"
-                       value="2023-03-07"
-                       min="2022-01-01" max="2023-03-08">
-                <p>Start date</p>
-            </div>
-            <div class="col-2">
-                <p></p>
-                <input type="date" id="finish" name="news_finish"
-                       value="2023-03-07"
-                       min="2022-01-01" max="2023-03-08">
-                <p>Finish date</p>
-            </div>
-            <div class="col-2">
-                <p></p>
-                <button type="submit">Submit</button>
-            </div>
-        </div>
-    </form>
-
-</div>
 
 <div class="main-section">
     <div class="tab" th:each="article : ${articleList}">
