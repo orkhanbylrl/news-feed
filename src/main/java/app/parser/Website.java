@@ -14,7 +14,6 @@ public enum Website {
 
     Website(JsoupParser parser ) {
         this.parser = parser;
-
     }
 
     public JsoupParser getParser() {

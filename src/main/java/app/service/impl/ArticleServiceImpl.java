@@ -3,9 +3,7 @@ package app.service.impl;
 import app.entity.Article;
 import app.parser.JsoupParser;
 import app.parser.Website;
-import app.parser.data.DroidLifeParser;
-import app.parser.data.TechCrunchParser;
-import app.parser.data.TechStartupsParser;
+import app.parser.data.*;
 import app.repository.ArticleRepository;
 import app.service.ArticleService;
 import jakarta.persistence.EntityManager;
@@ -30,6 +28,8 @@ public class ArticleServiceImpl implements ArticleService {
     private final TechCrunchParser techCrunchParser;
     private final DroidLifeParser droidLifeParser;
     private final TechStartupsParser techStartupsParser;
+    private final ABCNewsParser abcNewsParser;
+    private final APNewsParser apNewsParser;
 
 
     public void saveAll(List<Article> articles) {
@@ -51,9 +51,13 @@ public class ArticleServiceImpl implements ArticleService {
         List<Article> techCrunchParserArticles = techCrunchParser.getArticles();
         List<Article> droidLifeParserArticles = droidLifeParser.getArticles();
         List<Article> techStartupsParserArticles = techStartupsParser.getArticles();
+        List<Article> abcNewsParserArticles = abcNewsParser.getArticles();
+        List<Article> apNewsParserArticles = apNewsParser.getArticles();
         allArticles.addAll(techCrunchParserArticles);
         allArticles.addAll(droidLifeParserArticles);
         allArticles.addAll(techStartupsParserArticles);
+//        allArticles.addAll(abcNewsParserArticles);
+//        allArticles.addAll(apNewsParserArticles);
 
         this.mergeAllArticles(allArticles);
 
@@ -61,14 +65,14 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> getAll() {
-
-        List<Article> collect = StreamSupport.stream(repo.findAllByOrderByDateAscHeaderAsc().spliterator(), false)
-                .collect(Collectors.toList());
-
-        return collect;
+        return repo.findAllByOrderByDateAscHeaderAsc();
     }
 
 
+    @Override
+    public List<Article> getWithout(List<Website> websites){
+        return repo.findBySiteNotInOrderByDateAscHeaderAsc(websites);
+    }
 
 
     public Stream<JsoupParser> getNewsParsers() {

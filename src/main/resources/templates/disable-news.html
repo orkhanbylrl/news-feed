@@ -9,10 +9,6 @@
 <header class="main-header">
     <a href="./main-page.html" class="main-header-logo"><img src="../static/img/Group%2012.png" alt="IBA Tech Academy"></a>
     <div class="main-header-wrapper">
-        <label class="main-header-search-wrapper">
-            <input type="search" class="main-header-search" placeholder="Search">
-            <img src="../static/img/search-icon.svg" alt="Search Icon">
-        </label>
         <div class="main-header-profile-wrapper">
             <div class="main-header-profile-credentials">
                 <span class="main-header-profile-welcome">Welcome,</span>
@@ -31,105 +27,48 @@
 <section>
     <div class="add-search">
         <p class="details">Disable news from specific websites:</p>
-        <label class="main-header-search-wrapper">
-            <input type="search" class="main-header-search" placeholder="Search">
-            <img src="../static/img/search-icon.svg" alt="Search Icon">
-        </label>
     </div>
+    <form th:action="@{/article/handle_disable}" method="post">
     <div class="news-tabs">
+
         <div class="single-tab">
-            <img class="tab-picture" src="../static/img/1_6_fgYnisCa9V21mymySIvA%201.png">
-            <p class="tab-title">MEDIUM</p>
-            <p class="tab-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
+            <img class="tab-picture" src="../static/img/ABC_News_logo_2021.svg.png">
+            <p class="tab-title">ABCNews</p>
             <div class="button">
-                <img class="icon" src="../static/img/vec.png">
-                <p class="button-text">Dissmiss this author</p>
+                <input type="checkbox" id="ABCNews" name="ABCNews"  > Dissmiss this author </input>
             </div>
         </div>
         <div class="single-tab">
-            <img class="tab-picture" src="../static/img/1_6_fgYnisCa9V21mymySIvA%201.png">
-            <p class="tab-title">MEDIUM</p>
-            <p class="tab-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
+            <img class="tab-picture" src="../static/img/Associated_Press_logo_2012.svg.png">
+            <p class="tab-title">APNews</p>
             <div class="button">
-                <img class="icon" src="../static/img/vec.png">
-                <p class="button-text">Dissmiss this author</p>
+                <input type="checkbox" id="APNews" name="APNews" value="true" > Dissmiss this author </input>
             </div>
         </div>
         <div class="single-tab">
-            <img class="tab-picture" src="../static/img/1_6_fgYnisCa9V21mymySIvA%201.png">
-            <p class="tab-title">MEDIUM</p>
-            <p class="tab-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
+            <img class="tab-picture" src="../static/img/DL-Google-Square.png">
+            <p class="tab-title">DroidLife</p>
             <div class="button">
-                <img class="icon" src="../static/img/vec.png">
-                <p class="button-text">Dissmiss this author</p>
+                <input type="checkbox" id="DroidLife" name="DroidLife"  > Dissmiss this author </input>
             </div>
         </div>
         <div class="single-tab">
-            <img class="tab-picture" src="../static/img/1_6_fgYnisCa9V21mymySIvA%201.png">
-            <p class="tab-title">MEDIUM</p>
-            <p class="tab-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
+            <img class="tab-picture" src="../static/img/techcrunch-logo-1.png" w>
+            <p class="tab-title">TechCrunch</p>
             <div class="button">
-                <img class="icon" src="../static/img/vec.png">
-                <p class="button-text">Dissmiss this author</p>
+                <input type="checkbox" id="TechCrunch" name="TechCrunch" > Dissmiss this author </input>
             </div>
         </div>
         <div class="single-tab">
-            <img class="tab-picture" src="../static/img/1_6_fgYnisCa9V21mymySIvA%201.png">
-            <p class="tab-title">MEDIUM</p>
-            <p class="tab-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
+            <img class="tab-picture" src="../static/img/techstartups.com-logo-v3.png">
+            <p class="tab-title">TechStartups</p>
             <div class="button">
-                <img class="icon" src="../static/img/vec.png">
-                <p class="button-text">Dissmiss this author</p>
+                <input type="checkbox" id="TechStartups" name="TechStartups"  > Dissmiss this author </input>
             </div>
         </div>
     </div>
-    <div class="news-tabs">
-        <div class="single-tab">
-            <img class="tab-picture" src="../static/img/1_6_fgYnisCa9V21mymySIvA%201.png">
-            <p class="tab-title">MEDIUM</p>
-            <p class="tab-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
-            <div class="button">
-                <img class="icon" src="../static/img/vec.png">
-                <p class="button-text">Dissmiss this author</p>
-            </div>
-        </div>
-        <div class="single-tab">
-            <img class="tab-picture" src="../static/img/1_6_fgYnisCa9V21mymySIvA%201.png">
-            <p class="tab-title">MEDIUM</p>
-            <p class="tab-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
-            <div class="button">
-                <img class="icon" src="../static/img/vec.png">
-                <p class="button-text">Dissmiss this author</p>
-            </div>
-        </div>
-        <div class="single-tab">
-            <img class="tab-picture" src="../static/img/1_6_fgYnisCa9V21mymySIvA%201.png">
-            <p class="tab-title">MEDIUM</p>
-            <p class="tab-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
-            <div class="button">
-                <img class="icon" src="../static/img/vec.png">
-                <p class="button-text">Dissmiss this author</p>
-            </div>
-        </div>
-        <div class="single-tab">
-            <img class="tab-picture" src="../static/img/1_6_fgYnisCa9V21mymySIvA%201.png">
-            <p class="tab-title">MEDIUM</p>
-            <p class="tab-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
-            <div class="button">
-                <img class="icon" src="../static/img/vec.png">
-                <p class="button-text">Dissmiss this author</p>
-            </div>
-        </div>
-        <div class="single-tab">
-            <img class="tab-picture" src="../static/img/1_6_fgYnisCa9V21mymySIvA%201.png">
-            <p class="tab-title">MEDIUM</p>
-            <p class="tab-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
-            <div class="button">
-                <img class="icon" src="../static/img/vec.png">
-                <p class="button-text">Dissmiss this author</p>
-            </div>
-        </div>
-    </div>
+        <input  class="login-section-container-form-login" type="submit" value="Submit">
+    </form>
 
 </section>
 

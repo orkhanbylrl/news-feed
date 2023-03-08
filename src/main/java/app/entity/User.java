@@ -1,5 +1,6 @@
 package app.entity;
 
+import app.parser.Website;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class User {
     private String email;
     private String password;
     private List<String> roles = new ArrayList<>();
+
 
 
 

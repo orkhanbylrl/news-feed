@@ -42,7 +42,7 @@ public class APNewsParser implements JsoupParser {
                         .get();
                 String fullContent = doc1.getElementsByClass("Article").text();
 
-                Article article = new Article(header, content, link, image, fullContent,date, Website.APNews);
+                Article article = new Article(header, content, link, image,date, Website.APNews);
                 articles.add(article);
             }
         } catch (IOException e) {
