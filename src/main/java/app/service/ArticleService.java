@@ -12,5 +12,8 @@ public interface ArticleService {
 
     void mergeAllArticles(List<Article> articles);
 
+    void updateArticles();
+
+    List<Article> getAll();
 
 }

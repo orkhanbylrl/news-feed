@@ -3,47 +3,71 @@ package app.service.impl;
 import app.entity.Article;
 import app.parser.JsoupParser;
 import app.parser.Website;
+import app.parser.data.DroidLifeParser;
+import app.parser.data.TechCrunchParser;
+import app.parser.data.TechStartupsParser;
 import app.repository.ArticleRepository;
 import app.service.ArticleService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository repo;
-
-
-    private final EntityManager entityManager;
-
+    private final TechCrunchParser techCrunchParser;
+    private final DroidLifeParser droidLifeParser;
+    private final TechStartupsParser techStartupsParser;
 
 
     public void saveAll(List<Article> articles) {
          repo.saveAll(articles);
     }
 
-    @Transactional
     public void mergeAllArticles(List<Article> articles) {
         for (Article article : articles) {
 
             if (!repo.existsByArticleLink(article.getArticleLink())) {
-                entityManager.merge(article);
+                repo.save(article);
             }
         }
     }
 
-//    public Page<Article> findArticleByDate(String start_date, String finish_date) {
-//        LocalDate date1 = LocalDate.parse(start_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-//        LocalDate date2 = LocalDate.parse(finish_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-//        return articleRepository.findBySiteInAndDateBetweenOrderByDateDesc(date1, date2);
-//    }
+    @Override
+    public void updateArticles() {
+        List<Article> allArticles = new ArrayList<>();
+        List<Article> techCrunchParserArticles = techCrunchParser.getArticles();
+        List<Article> droidLifeParserArticles = droidLifeParser.getArticles();
+        List<Article> techStartupsParserArticles = techStartupsParser.getArticles();
+        allArticles.addAll(techCrunchParserArticles);
+        allArticles.addAll(droidLifeParserArticles);
+        allArticles.addAll(techStartupsParserArticles);
+
+        this.mergeAllArticles(allArticles);
+
+    }
+
+    @Override
+    public List<Article> getAll() {
+
+        List<Article> collect = StreamSupport.stream(repo.findAllByOrderByDateAscHeaderAsc().spliterator(), false)
+                .collect(Collectors.toList());
+
+        return collect;
+    }
+
 
 
 

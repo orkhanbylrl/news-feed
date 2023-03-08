@@ -16,4 +16,8 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
 //    Page<Article> findBySiteInAndDateBetweenOrderByDateDesc(LocalDate d1, LocalDate d2);
 
     Boolean existsByArticleLink(String link);
+
+    Iterable<Article> findAllByOrderByDateAscHeaderAsc();
+
+
 }

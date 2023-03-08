@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -22,9 +23,7 @@ import java.util.List;
 public class ArticlesController {
 
     private final ArticleService articleService;
-    private final TechCrunchParser techCrunchParser;
-    private final DroidLifeParser droidLifeParser;
-    private final TechStartupsParser techStartupsParser;
+
 
 
     private static String fmt(String format, Object... args) {
@@ -32,26 +31,15 @@ public class ArticlesController {
     }
 
     @GetMapping("/news_feed")
-    public String showDesignForm(Model model, @RequestParam(required = false)String news_start
-            , @RequestParam(required = false)String news_finish) {
-        List<Article> techCrunchParserArticles = techCrunchParser.getArticles();
-        articleService.mergeAllArticles(techCrunchParserArticles);
-        var droidLifeParserArticles = droidLifeParser.getArticles();
-        var techStartupsParserArticles = techStartupsParser.getArticles();
-        model.addAttribute("articleList", techCrunchParserArticles);
-//        model.addAttribute("articleList", droidLifeParserArticles);
-//        model.addAttribute("articleList", techStartupsParserArticles);
+    public String showDesignForm(Model model) {
+
+        articleService.updateArticles();
+
+        List<Article> all = articleService.getAll();
+
+        model.addAttribute("articleList", all);
 
 
-
-
-
-
-        log.info(fmt("Start date for search ->  %s",news_start));
-        model.addAttribute("news_start",news_start);
-
-        log.info(fmt("Finish date for search ->  %s",news_finish));
-        model.addAttribute("news_finish",news_finish);
         return "main-page";
     }
 
@@ -59,11 +47,11 @@ public class ArticlesController {
 
     @GetMapping("/news_feed/full_article/{id}")
     public String showFullArticle(Model model){
-        List<Article> techCrunchParserArticles = techCrunchParser.getArticles();
-
-        articleService.mergeAllArticles(techCrunchParserArticles);
-
-        model.addAttribute("articleList", techCrunchParserArticles);
+//        List<Article> techCrunchParserArticles = techCrunchParser.getArticles();
+//
+//        articleService.mergeAllArticles(techCrunchParserArticles);
+//
+//        model.addAttribute("articleList", techCrunchParserArticles);
         return "open-tab";
     }
 
