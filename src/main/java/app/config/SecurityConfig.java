@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .loginPage("/user/login")
                 .usernameParameter("email")
 //                .loginProcessingUrl("/user/handle_login")
-                .defaultSuccessUrl("/news_feed")
+                .defaultSuccessUrl("/article/news_feed")
                 .and()
                 .logout()
                 .permitAll()
