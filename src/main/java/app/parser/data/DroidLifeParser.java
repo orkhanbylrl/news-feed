@@ -48,6 +48,7 @@ public class DroidLifeParser implements JsoupParser {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+
                 String fullContent = doc1.getElementsByClass("entry-body").text();
                 articles.add(new Article(header, content, link, imageLink, date, Website.DroidLife));
             });

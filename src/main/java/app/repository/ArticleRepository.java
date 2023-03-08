@@ -17,7 +17,9 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
 
     Boolean existsByArticleLink(String link);
 
-    Iterable<Article> findAllByOrderByDateAscHeaderAsc();
+    List<Article> findAllByOrderByDateAscHeaderAsc();
+
+    List<Article> findBySiteNotInOrderByDateAscHeaderAsc(List<Website> websites);
 
 
 }

@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tinder: Main Page</title>
+    <title>News Feed: Main Page</title>
     <link rel="stylesheet" th:href="@{../static/css/main-page.css}">
 </head>
 <body>
 
 <header class="main-header">
-    <a href="/news_feed" class="main-header-logo"><img th:src="@{../static/img/Group%2012.png}" alt="IBA Tech Academy"></a>
+    <a th:href="@{/aritcle/news_feed}" class="main-header-logo"><img th:src="@{../static/img/Group%2012.png}" alt="IBA Tech Academy"></a>
 
     <div class="main-header-wrapper">
         <label class="main-header-search-wrapper">
@@ -28,7 +28,7 @@
             <div class="hidden-accordion-wrapper">
                 <ul class="hidden-accordion">
                     <li class="hidden-accordion-item"><img th:src="@{../static/img/favourite-icon.svg}" alt="Favourite Icon"><a
-                            th:href="@{/disable_news}" class="hidden-accordion-item-link">My News</a></li>
+                            th:href="@{/article/disable}" class="hidden-accordion-item-link">My News</a></li>
                     <li class="hidden-accordion-item"><img th:src="@{../static/img/log-out-icon.svg}" alt="Log Out Icon"><a
                             th:href="@{/login}" class="hidden-accordion-item-link">Log Out</a></li>
                 </ul>
