@@ -36,12 +36,12 @@
     </div>
 </header>
 
-<section class="tab-section">
+<section class="tab-section" th:each="article : ${articleList}">
     <img class="main-image" th:src="${article.imageLink}" alt="404">
     <img class="background-drawing" th:src="@{../static/img/Group.png}">
     <div class="text-box">
         <p class="text-box-title" th:text="${article.header}"></p>
-            <p class="tab-description" th:text="${article.getContent()}"></p>
+            <p class="tab-description" th:text="${article.getFullContent()}"></p>
         </p>
     </div>
 </section>

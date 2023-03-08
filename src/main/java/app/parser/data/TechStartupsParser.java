@@ -34,7 +34,7 @@ public class TechStartupsParser implements JsoupParser {
 
                 Document doc1 = connection(link ,this.getClass().getName());
                 String fullContent = doc1.getElementsByClass("post_header").text();
-                articles.add(new Article(header, content, link, imageLink, fullContent,date, Website.TechStartups));
+                articles.add(new Article(header, content, link, imageLink, date, Website.TechStartups));
             });
         } catch (NullPointerException e) {
 
