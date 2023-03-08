@@ -54,6 +54,21 @@ public class TechCrunchParser implements JsoupParser {
         return articles;
     }
 
+    public String getFullContentTC(String link){
+        String fullContent = null;
+        try {
+            Document doc1 = Jsoup.connect(link)
+                        .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0)")
+                        .timeout(300000)
+                        .referrer("http://www.google.com")
+                        .get();
+                fullContent = doc1.getElementsByClass(".article-content").text();
+
+            } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return fullContent;
+    }
 
 }
 

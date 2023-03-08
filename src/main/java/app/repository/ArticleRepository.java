@@ -10,16 +10,20 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface ArticleRepository extends CrudRepository<Article, Integer> {
-//    Page<Article> findBySiteInAndDateBetweenOrderByDateDesc(LocalDate d1, LocalDate d2);
+public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
     Boolean existsByArticleLink(String link);
 
     List<Article> findAllByOrderByDateAscHeaderAsc();
 
     List<Article> findBySiteNotInOrderByDateAscHeaderAsc(List<Website> websites);
+
+    List<Article> findAllByHeaderContainingIgnoreCase(String keyword);
+
+
 
 
 }

@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
 @EnableWebSecurity
@@ -36,6 +37,8 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .requestMatchers("/user/**")
                 .permitAll()
+                .requestMatchers("/article/**")
+                .authenticated()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -46,11 +49,13 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/article/news_feed")
                 .and()
                 .logout()
+                .logoutUrl("/user/logout")
+                .logoutSuccessUrl("/user/login")
                 .permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .sessionAuthenticationStrategy(new SessionFixationProtectionStrategy())
+//                .sessionAuthenticationStrategy(new SessionFixationProtectionStrategy())
                 .and()
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

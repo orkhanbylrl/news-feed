@@ -12,7 +12,7 @@
 
     <div class="main-header-wrapper">
         <label class="main-header-search-wrapper">
-            <form th:action="@{/news_feed}" method="get">
+            <form th:action="@{/article/news_feed}" method="get">
                 <input type="text" class="main-header-search" name="keyword" placeholder="Press Enter">
                 <img th:src="@{../static/img/search-icon.svg}" alt="Search Icon">
             </form>
@@ -30,7 +30,7 @@
                     <li class="hidden-accordion-item"><img th:src="@{../static/img/favourite-icon.svg}" alt="Favourite Icon"><a
                             th:href="@{/article/disable}" class="hidden-accordion-item-link">My News</a></li>
                     <li class="hidden-accordion-item"><img th:src="@{../static/img/log-out-icon.svg}" alt="Log Out Icon"><a
-                            th:href="@{/login}" class="hidden-accordion-item-link">Log Out</a></li>
+                            th:href="@{/user/logout}" methods="post" class="hidden-accordion-item-link">Log Out</a></li>
                 </ul>
             </div>
         </div>
@@ -40,7 +40,7 @@
 
 <div class="main-section">
     <div class="tab" th:each="article : ${articleList}">
-        <a class="tab-link-wrapper" th:href="${article.articleLink}">
+        <a class="tab-link-wrapper" th:href="@{/article/full_article/{id}(id=${article.id})}">
             <img class="tab-image main-page-image" th:src="${article.imageLink}" alt="404">
             <div class="tab-content">
                 <p class="tab-title" th:text="${article.header}"></p>

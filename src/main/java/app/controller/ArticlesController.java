@@ -3,27 +3,19 @@ package app.controller;
 import app.entity.Article;
 import app.entity.User;
 import app.parser.Website;
-import app.parser.data.TechCrunchParser;
-import app.parser.data.DroidLifeParser;
-import app.parser.data.TechStartupsParser;
 import app.service.ArticleService;
 import app.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @Log4j2
@@ -43,13 +35,15 @@ public class ArticlesController {
     }
 
     @GetMapping("/news_feed")
-    public String showDesignForm(Model model, Principal principal) {
+    public String showDesignForm(Model model, Principal principal, @Param(value = "keyword") String keyword) {
         User user = userService.getUser(principal.getName()).get();
-        articleService.updateArticles();
         List<Article> all;
 
         if(disabled.isEmpty())
-            all = articleService.getAll();
+            if(keyword != null)
+                all = articleService.search(keyword);
+            else
+                all = articleService.getAll();
         else
             all = articleService.getWithout(disabled);
 
@@ -65,18 +59,27 @@ public class ArticlesController {
 
 
     @GetMapping("/full_article/{id}")
-    public String showFullArticle(Model model){
-
+    public String showFullArticle(Model model, @PathVariable Integer id, Principal principal){
+        User user = userService.getUser(principal.getName()).get();
+        Article article = articleService.getArticle(id).get();
+        String fullContent = articleService.getFullContent(article);
+        model.addAttribute("article", article);
+        model.addAttribute("user", user);
+        model.addAttribute("fullContent", fullContent);
         return "open-tab";
     }
 
     @GetMapping("/disable")
-    public String disable(Model model){
+    public String disable(Model model, Principal principal){
+        User user = userService.getUser(principal.getName()).get();
+        model.addAttribute("user", user);
+        articleService.updateArticles();
         return "disable-news";
     }
 
     @PostMapping("/handle_disable")
     public String disable_handle(HttpServletRequest rq){
+        articleService.updateArticles();
         disabled.clear();
         if(rq.getParameter("ABCNews") != null){
             disabled.add(Website.ABCNews);
