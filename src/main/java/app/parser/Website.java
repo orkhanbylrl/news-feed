@@ -1,12 +1,12 @@
 package app.parser;
 
-import app.parser.data.DroidLifeParser;
-import app.parser.data.TechCrunchParser;
-import app.parser.data.TechStartupsParser;
+import app.parser.data.*;
 
 public enum Website {
     TechCrunch(new TechCrunchParser()),
     DroidLife(new DroidLifeParser()),
+    APNews(new APNewsParser()),
+    ABCNews(new ABCNewsParser()),
     TechStartups(new TechStartupsParser());
 
     public final JsoupParser parser;
