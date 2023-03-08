@@ -41,4 +41,16 @@ public class TechStartupsParser implements JsoupParser {
         }
         return articles;
     }
+
+    public String getFullContentTS(String link) {
+        String fullContent = null;
+        try {
+            Document doc1 = connection(link, this.getClass().getName());
+            fullContent = doc1.getElementsByClass("post_header").text();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return fullContent;
+    }
 }

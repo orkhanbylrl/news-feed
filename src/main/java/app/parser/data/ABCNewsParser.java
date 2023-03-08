@@ -30,7 +30,7 @@ public class ABCNewsParser implements JsoupParser {
                     .get();
             Elements elements = doc.getElementsByClass("ContentRoll");
             for (Element element : elements) {
-                String header = element.select(".AnchorLink").text();
+                String header = element.select(".AnchorLink").text().substring(0, 15);
                 String content = element.select(".ContentRoll__Desc").text();
                 String link = Objects.requireNonNull(Objects.requireNonNull(element.select(".AnchorLink").first()).select("a").first()).attr("href");
                 String image = Objects.requireNonNull(Objects.requireNonNull(element.select(".ContentRoll__Image").first()).select("img").first()).attr("src");

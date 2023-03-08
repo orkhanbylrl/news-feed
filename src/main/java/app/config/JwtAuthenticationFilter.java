@@ -34,11 +34,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NotNull FilterChain filterChain) throws ServletException, IOException {
 
 
-        HttpSession session = rq.getSession();
-        final String authHeader = (String) session.getAttribute("Authorization");
-        Authentication auth = (Authentication) session.getAttribute("auth");
+        final String authHeader = (String) UserService.forToken.get("Authorization");
+        Authentication auth = (Authentication) UserService.forToken.get("auth");
+
         final String jwt;
         final String userEmail;
+
 
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(rq, rs);
@@ -51,10 +52,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
+        System.out.println("expiration " + jwtService.extractExpiration(jwt));
 
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() != null) {
             UserDetails userDetails = this.userService.loadUserByUsername(userEmail);
-            if(jwtService.validateToken(jwt, userDetails)){
+            if(jwtService.isValid(jwt, userDetails)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );

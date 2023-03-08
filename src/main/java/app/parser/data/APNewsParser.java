@@ -40,7 +40,6 @@ public class APNewsParser implements JsoupParser {
                         .timeout(300000)
                         .referrer("https://www.google.com")
                         .get();
-                String fullContent = doc1.getElementsByClass("Article").text();
 
                 Article article = new Article(header, content, link, image,date, Website.APNews);
                 articles.add(article);
@@ -50,4 +49,23 @@ public class APNewsParser implements JsoupParser {
         }
         return articles;
     }
+
+    public String getFullContentAP(String link){
+        String fullContent = null;
+        try {
+               Document doc1 = Jsoup.connect(link)
+                        .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0)")
+                        .timeout(300000)
+                        .referrer("https://www.google.com")
+                        .get();
+
+               fullContent = doc1.getElementsByClass("Article").text();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return fullContent;
+    }
+
+
 }

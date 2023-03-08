@@ -7,6 +7,9 @@ import app.dto.UserRegForm;
 import app.dto.UserResPasForm;
 import app.entity.PassResetToken;
 import app.entity.User;
+import app.exception.MessageFailedException;
+import app.exception.UserNotFoundException;
+import app.service.ArticleService;
 import app.service.EmailClientService;
 import app.service.TokenService;
 import app.service.UserService;
@@ -28,9 +31,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -43,6 +44,8 @@ public class UserController {
     private final AuthenticationManager authManager;
     private final EmailClientService emailClientService;
     private final TokenService tokenService;
+
+
 
     @GetMapping("/login")
     public String login_page(Model model){
@@ -67,9 +70,15 @@ public class UserController {
         Authentication authenticate = authManager.authenticate(authToken);
 
         if(authenticate.isAuthenticated()){
-            token = jwtService.generateToken(userService.loadUserByUsername(userLog.getEmail()));
+            try{
+                token = jwtService.generateToken(userService.loadUserByUsername(userLog.getEmail()));
+            } catch (Exception e) {
+                throw new UserNotFoundException(e);
+            }
             session.setAttribute("Authorization", "Bearer " + token);
             session.setAttribute("auth", authenticate);
+            userService.forToken.put("Authorization", "Bearer " + token);
+            userService.forToken.put("auth", authenticate);
         }
 
         return "redirect:/article/news_feed";
@@ -103,7 +112,7 @@ public class UserController {
     }
 
     @PostMapping("/forgot_handler")
-    public void forgot_handler(HttpServletRequest rq) throws MessagingException {
+    public void forgot_handler(HttpServletRequest rq)  {
 
         String email = rq.getParameter("email");
         if(userService.isUserExist(email)){
@@ -117,7 +126,11 @@ public class UserController {
             String subject = "Email for reset password";
             String body = Utility.setBody(link);
 
-           emailClientService.sendEmailWithAttachment(email, subject, body);
+            try{
+                emailClientService.sendEmailWithAttachment(email, subject, body);
+            } catch (MessagingException e) {
+                throw new MessageFailedException(e + "error while sending message");
+            }
         }
     }
 
@@ -149,6 +162,11 @@ public class UserController {
         userService.saveUser(user);
         tokenService.deleteToken(user);
 
+        return "redirect:/user/login";
+    }
+
+    @GetMapping("/logout")
+    public String  logout(){
         return "redirect:/user/login";
     }
 

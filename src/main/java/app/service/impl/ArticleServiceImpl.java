@@ -10,13 +10,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -30,6 +29,9 @@ public class ArticleServiceImpl implements ArticleService {
     private final TechStartupsParser techStartupsParser;
     private final ABCNewsParser abcNewsParser;
     private final APNewsParser apNewsParser;
+
+
+
 
 
     public void saveAll(List<Article> articles) {
@@ -51,21 +53,47 @@ public class ArticleServiceImpl implements ArticleService {
         List<Article> techCrunchParserArticles = techCrunchParser.getArticles();
         List<Article> droidLifeParserArticles = droidLifeParser.getArticles();
         List<Article> techStartupsParserArticles = techStartupsParser.getArticles();
-        List<Article> abcNewsParserArticles = abcNewsParser.getArticles();
         List<Article> apNewsParserArticles = apNewsParser.getArticles();
         allArticles.addAll(techCrunchParserArticles);
         allArticles.addAll(droidLifeParserArticles);
         allArticles.addAll(techStartupsParserArticles);
-//        allArticles.addAll(abcNewsParserArticles);
-//        allArticles.addAll(apNewsParserArticles);
+        allArticles.addAll(apNewsParserArticles);
 
         this.mergeAllArticles(allArticles);
 
     }
 
-    @Override
+
     public List<Article> getAll() {
         return repo.findAllByOrderByDateAscHeaderAsc();
+    }
+
+
+    @Override
+    public Page<Article> getAll0() {
+
+        return repo.findAll(PageRequest.of(10, 20));
+    }
+
+    @Override
+    public Optional<Article> getArticle(int id) {
+        return repo.findById(id);
+    }
+
+    @Override
+    public String getFullContent(Article article) {
+        String content = null;
+        if(article.getSite() == Website.APNews){
+            content = apNewsParser.getFullContentAP(article.getArticleLink());
+        } else if (article.getSite() == Website.DroidLife) {
+            content = droidLifeParser.getFullContentDroid(article.getArticleLink());
+        }
+        else if(article.getSite() == Website.TechCrunch){
+            content = techCrunchParser.getFullContentTC(article.getArticleLink());
+        } else if (article.getSite() == Website.TechStartups) {
+            content = techStartupsParser.getFullContentTS(article.getArticleLink());
+        }
+        return content;
     }
 
 
@@ -79,6 +107,14 @@ public class ArticleServiceImpl implements ArticleService {
 
         return EnumSet.allOf(Website.class).stream().map(site -> site.getParser());
 
+    }
+
+    @Override
+    public List<Article> search(String keyword) {
+
+        if(keyword != null)
+            return repo.findAllByHeaderContainingIgnoreCase(keyword);
+        return getAll();
     }
 
     @Override

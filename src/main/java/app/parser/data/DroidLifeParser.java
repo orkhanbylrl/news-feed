@@ -60,4 +60,31 @@ public class DroidLifeParser implements JsoupParser {
         return articles;
     }
 
+
+    public String getFullContentDroid(String link) {
+        String fullContent = null;
+        try {
+            Document doc1;
+            try {
+                doc1 = Jsoup.connect(link)
+                        .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0)")
+                        .timeout(300000)
+                        .referrer("http://www.google.com")
+                        .get();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            fullContent = doc1.getElementsByClass("entry-body").text();
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+        return fullContent;
+    }
+
+
+
+
+
 }
