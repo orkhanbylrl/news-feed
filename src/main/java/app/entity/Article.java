@@ -2,9 +2,11 @@ package app.entity;
 
 import app.parser.Website;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -28,6 +30,10 @@ public class Article {
     @Column(name="image_link")
     private String imageLink;
 
+
+    @Column(name = "full_content")
+    private String fullContent;
+
     @Column(name="article_date")
     private LocalDate date;
 
@@ -36,11 +42,12 @@ public class Article {
     private Website site;
 
 
-    public Article(String header, String content, String articleLink, String imageLink, LocalDate date, Website site) {
+    public Article(String header, String content, String articleLink, String fullContent,String imageLink, LocalDate date, Website site) {
         this.header = header;
         this.content = content;
         this.articleLink = articleLink;
         this.imageLink = imageLink;
+        this.fullContent = fullContent;
         this.date = date;
         this.site = site;
     }
