@@ -2,11 +2,13 @@ package app.parser.data;
 
 import app.entity.Article;
 import app.parser.JsoupParser;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import app.parser.Website;
 import org.springframework.stereotype.Component;
 
+import javax.print.Doc;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,7 +32,9 @@ public class TechStartupsParser implements JsoupParser {
                 String imageLink = element.getElementsByTag("img").first().attr("src");
                 LocalDate date = convertStringToDate(element.select(".post_date .post_info_date > a").text().split("Posted On ")[1], DateTimeFormatter.ofPattern("MMMM d, uuuu"));
 
-                articles.add(new Article(header, content, link, imageLink, date, Website.TechStartups));
+                Document doc1 = connection(link ,this.getClass().getName());
+                String fullContent = doc1.getElementsByClass("post_header").text();
+                articles.add(new Article(header, content, link, imageLink, fullContent,date, Website.TechStartups));
             });
         } catch (NullPointerException e) {
 

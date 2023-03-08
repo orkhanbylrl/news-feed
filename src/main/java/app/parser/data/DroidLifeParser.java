@@ -38,7 +38,18 @@ public class DroidLifeParser implements JsoupParser {
                         .concat(element.select(".picture").first().select("img").first().attr("src"));
                 LocalDate date = convertStringToDate(element.select(".entry-meta__updated").text(), DateTimeFormatter.ofPattern("MMMM d, uuuu"));
 
-                articles.add(new Article(header, content, link, imageLink, date, Website.DroidLife));
+                Document doc1;
+                try {
+                    doc1 = Jsoup.connect(link)
+                            .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0)")
+                            .timeout(300000)
+                            .referrer("http://www.google.com")
+                            .get();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                String fullContent = doc1.getElementsByClass("entry-body").text();
+                articles.add(new Article(header, content, link, imageLink, fullContent,date, Website.DroidLife));
             });
         } catch (NullPointerException e) {
         } catch (IOException e) {

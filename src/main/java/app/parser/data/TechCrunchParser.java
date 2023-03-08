@@ -26,7 +26,7 @@ public class TechCrunchParser implements JsoupParser {
     @Override
     public List<Article> getArticles() {
         try {
-            Document doc = Jsoup.connect("https://techcrunch.com/category/startups/")
+            Document doc = Jsoup.connect("https://techcrunch.com/")
                     .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0)")
                     .timeout(300000)
                     .referrer("http://www.google.com")
@@ -38,9 +38,14 @@ public class TechCrunchParser implements JsoupParser {
                 String link = Objects.requireNonNull(Objects.requireNonNull(element.select(".post-block__title").first()).select("a").first()).attr("href");
                 String image = Objects.requireNonNull(Objects.requireNonNull(element.select(".post-block__media").first()).select("img").first()).attr("src");
                 LocalDate date = convertStringToDate(element.select("[datetime]").text(), DateTimeFormatter.ofPattern("MMM dd, uuuu"));
+                Document doc1 = Jsoup.connect(link)
+                        .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0)")
+                        .timeout(300000)
+                        .referrer("http://www.google.com")
+                        .get();
+                String fullContent = doc1.getElementsByClass(".article-content").text();
 
-
-                Article article = new Article(header, content, link, image, date, Website.TechCrunch);
+                Article article = new Article(header, content, link, image, fullContent,date, Website.TechCrunch);
                 articles.add(article);
             }
         } catch (IOException e) {

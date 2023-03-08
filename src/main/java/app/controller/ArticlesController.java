@@ -36,8 +36,8 @@ public class ArticlesController {
             , @RequestParam(required = false)String news_finish) {
         List<Article> techCrunchParserArticles = techCrunchParser.getArticles();
         articleService.mergeAllArticles(techCrunchParserArticles);
-//        var droidLifeParserArticles = droidLifeParser.getArticles();
-//        var techStartupsParserArticles = techStartupsParser.getArticles();
+        var droidLifeParserArticles = droidLifeParser.getArticles();
+        var techStartupsParserArticles = techStartupsParser.getArticles();
         model.addAttribute("articleList", techCrunchParserArticles);
 //        model.addAttribute("articleList", droidLifeParserArticles);
 //        model.addAttribute("articleList", techStartupsParserArticles);
@@ -57,8 +57,13 @@ public class ArticlesController {
 
 
 
-    @GetMapping("")
+    @GetMapping("/news_feed/full_article/{id}")
     public String showFullArticle(Model model){
+        List<Article> techCrunchParserArticles = techCrunchParser.getArticles();
+
+        articleService.mergeAllArticles(techCrunchParserArticles);
+
+        model.addAttribute("articleList", techCrunchParserArticles);
         return "open-tab";
     }
 
