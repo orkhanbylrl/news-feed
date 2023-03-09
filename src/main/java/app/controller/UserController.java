@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.config.jwt.JwtService;
+import app.dto.ForgotPassForm;
 import app.dto.UserLoginForm;
 import app.dto.UserRegForm;
 
@@ -8,8 +9,7 @@ import app.dto.UserResPasForm;
 import app.entity.PassResetToken;
 import app.entity.User;
 import app.exception.MessageFailedException;
-import app.exception.UserNotFoundException;
-import app.service.ArticleService;
+import app.exception.UserNotFoundEx;
 import app.service.EmailClientService;
 import app.service.TokenService;
 import app.service.UserService;
@@ -73,10 +73,9 @@ public class UserController {
             try{
                 token = jwtService.generateToken(userService.loadUserByUsername(userLog.getEmail()));
             } catch (Exception e) {
-                throw new UserNotFoundException(e);
+                throw new UserNotFoundEx(e);
             }
-            session.setAttribute("Authorization", "Bearer " + token);
-            session.setAttribute("auth", authenticate);
+
             userService.forToken.put("Authorization", "Bearer " + token);
             userService.forToken.put("auth", authenticate);
         }
@@ -107,16 +106,17 @@ public class UserController {
 
 
     @GetMapping("/forgot_pass")
-    public String forgot_pass(){
+    public String forgot_pass(Model model){
+        model.addAttribute("forPass", new ForgotPassForm());
         return "forgot-password";
     }
 
     @PostMapping("/forgot_handler")
-    public void forgot_handler(HttpServletRequest rq)  {
+    public void forgot_handler(@ModelAttribute @Valid ForgotPassForm passFrom, BindingResult result, HttpServletRequest rq)  {
 
-        String email = rq.getParameter("email");
+        String email = passFrom.getEmail();
         if(userService.isUserExist(email)){
-            System.out.println("user exists");
+
             User user = userService.getUser(email).get();
             String token = UUID.randomUUID().toString();
 
