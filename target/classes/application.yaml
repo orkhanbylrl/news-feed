@@ -34,4 +34,4 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     enabled: true
-    suffix: .html
+
