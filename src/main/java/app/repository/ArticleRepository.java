@@ -23,7 +23,4 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
     List<Article> findAllByHeaderContainingIgnoreCase(String keyword);
 
-
-
-
 }

@@ -10,9 +10,6 @@ import java.util.Optional;
 public interface ArticleService {
 
     List<Article> search(String keyword);
-    void save(Article article);
-
-    void saveAll(List<Article> articleList);
 
     void mergeAllArticles(List<Article> articles);
 
@@ -21,7 +18,6 @@ public interface ArticleService {
     List<Article> getAll();
 
     List<Article> getWithout(List<Website> websites);
-    Page<Article> getAll0();
 
     Optional<Article> getArticle(int id);
 

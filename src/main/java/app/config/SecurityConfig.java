@@ -35,7 +35,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // http builder configurations for authorize requests and form login (see below)
 
 
         http.csrf().disable()
@@ -50,7 +49,6 @@ public class SecurityConfig {
                 .formLogin()
                 .loginPage("/user/login")
                 .usernameParameter("email")
-//                .loginProcessingUrl("/user/handle_login")
                 .defaultSuccessUrl("/article/news_feed")
                 .and()
                 .logout()
@@ -60,7 +58,6 @@ public class SecurityConfig {
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .sessionAuthenticationStrategy(new SessionFixationProtectionStrategy())
                 .and()
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
