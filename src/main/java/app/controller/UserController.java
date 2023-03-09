@@ -113,7 +113,6 @@ public class UserController {
 
     @PostMapping("/forgot_handler")
     public void forgot_handler(@ModelAttribute @Valid ForgotPassForm passFrom, BindingResult result, HttpServletRequest rq)  {
-
         String email = passFrom.getEmail();
         if(userService.isUserExist(email)){
 
@@ -158,6 +157,7 @@ public class UserController {
         }
 
         User user = tokenService.getUser(userResPas.getToken());
+        System.out.println("user " + user);
         user.setPassword(encoder.encode(userResPas.getPassword()));
         userService.saveUser(user);
         tokenService.deleteToken(user);

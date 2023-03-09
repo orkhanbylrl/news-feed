@@ -17,7 +17,7 @@ public class PassResetToken {
     private static final int EXPIRATION = 10 * 60 * 1000;
 
     @Id
-            @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String token;
