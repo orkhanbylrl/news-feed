@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News Feed: Main Page</title>
+    <link rel="stylesheet" th:href="@{../static/css/main-page.css}">
+</head>
+<body>
+
+<header class="main-header">
+    <a th:href="@{/aritcle/news_feed}" class="main-header-logo"><img th:src="@{../static/img/Group%2012.png}" alt="IBA Tech Academy"></a>
+
+    <div class="main-header-wrapper">
+        <label class="main-header-search-wrapper">
+            <form th:action="@{/article/news_feed}" method="get">
+                <input type="text" class="main-header-search" name="keyword" placeholder="Press Enter">
+                <img th:src="@{../static/img/search-icon.svg}" alt="Search Icon">
+            </form>
+        </label>
+
+        <div class="main-header-profile-wrapper">
+            <div class="main-header-profile-credentials">
+                <span class="main-header-profile-welcome">Welcome,</span>
+                <span class="main-header-username" th:text="${user.getFullName()}"></span>
+            </div>
+            <img class="main-header-user-icon" th:src="@{../static/img/user-icon.svg}" alt="User Icon">
+            <div class="hidden-accordion-wrapper">
+                <ul class="hidden-accordion">
+                    <li class="hidden-accordion-item"><img th:src="@{../static/img/favourite-icon.svg}" alt="Favourite Icon"><a
+                            th:href="@{/article/disable}" class="hidden-accordion-item-link">My News</a></li>
+                    <li class="hidden-accordion-item"><img th:src="@{../static/img/log-out-icon.svg}" alt="Log Out Icon"><a
+                            th:href="@{/user/logout}" methods="post" class="hidden-accordion-item-link">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+</body>
+</html>

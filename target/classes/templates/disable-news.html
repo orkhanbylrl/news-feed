@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tinder: news</title>
+    <title>News Feed: news</title>
     <link rel="stylesheet" href="../static/css/news.css">
 </head>
 <body>
@@ -18,7 +18,7 @@
             <img class="main-header-user-icon" src="../static/img/user-icon-with-background.svg" alt="User Icon">
             <div class="hidden-accordion-wrapper">
                 <ul class="hidden-accordion">
-                    <li class="hidden-accordion-item"><img src="../static/img/favourite-icon.svg" alt="Favourite Icon"><a href="./disable-news.html" class="hidden-accordion-item-link">My News</a></li>
+                    <li class="hidden-accordion-item"><img src="../static/img/favourite-icon.svg" alt="Favourite Icon"><a th:href="@{/article/news_feed}" class="hidden-accordion-item-link">My News</a></li>
                     <li class="hidden-accordion-item"><img src="../static/img/log-out-icon.svg" alt="Log Out Icon"><a th:href="@{/user/logout}" class="hidden-accordion-item-link">Log Out</a></li>
                 </ul>
             </div>
