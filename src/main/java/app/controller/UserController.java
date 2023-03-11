@@ -116,13 +116,10 @@ public class UserController {
     public String forgot_handler(@ModelAttribute @Valid ForgotPassForm passFrom, BindingResult result, HttpServletRequest rq)  {
         String email = passFrom.getEmail();
         if(userService.isUserExist(email)){
-
             User user = userService.getUser(email).get();
             String token = UUID.randomUUID().toString();
-
             tokenService.createToken(user, token);
             String link = Utility.getSiteURL(rq) + "/user/reset_password?token=" + token;
-
             String subject = "Email for reset password";
             String body = Utility.setBody(link);
 

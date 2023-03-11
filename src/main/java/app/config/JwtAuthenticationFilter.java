@@ -52,7 +52,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
-        System.out.println("expiration " + jwtService.extractExpiration(jwt));
 
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() != null) {
             UserDetails userDetails = this.userService.loadUserByUsername(userEmail);
