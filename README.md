@@ -1,4 +1,4 @@
-# The News Feed Final Project
+# The News Feed
 
 ## Content:
 
