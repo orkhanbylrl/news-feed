@@ -11,6 +11,7 @@ spring:
     show-sql: true
 
 
+
   mvc:
     static-path-pattern: /static/**
 
@@ -20,6 +21,7 @@ spring:
     port: 587
     username: mailspring794@gmail.com
     password: vwwuxkuqqzblyfbz
+
     properties:
       mail:
         smtp:
@@ -34,4 +36,5 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     enabled: true
+
 

@@ -1,24 +1,19 @@
 package app.service.impl;
 
 import app.entity.Article;
-import app.parser.JsoupParser;
 import app.parser.Website;
-import app.parser.data.*;
+import app.parser.data.APNewsParser;
+import app.parser.data.DroidLifeParser;
+import app.parser.data.TechCrunchParser;
+import app.parser.data.TechStartupsParser;
 import app.repository.ArticleRepository;
 import app.service.ArticleService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,16 +22,8 @@ public class ArticleServiceImpl implements ArticleService {
     private final TechCrunchParser techCrunchParser;
     private final DroidLifeParser droidLifeParser;
     private final TechStartupsParser techStartupsParser;
-    private final ABCNewsParser abcNewsParser;
     private final APNewsParser apNewsParser;
 
-
-
-
-
-    public void saveAll(List<Article> articles) {
-         repo.saveAll(articles);
-    }
 
     public void mergeAllArticles(List<Article> articles) {
         for (Article article : articles) {
@@ -63,17 +50,10 @@ public class ArticleServiceImpl implements ArticleService {
 
     }
 
-
     public List<Article> getAll() {
         return repo.findAllByOrderByDateAscHeaderAsc();
     }
 
-
-    @Override
-    public Page<Article> getAll0() {
-
-        return repo.findAll(PageRequest.of(10, 20));
-    }
 
     @Override
     public Optional<Article> getArticle(int id) {
@@ -96,17 +76,9 @@ public class ArticleServiceImpl implements ArticleService {
         return content;
     }
 
-
     @Override
     public List<Article> getWithout(List<Website> websites){
         return repo.findBySiteNotInOrderByDateAscHeaderAsc(websites);
-    }
-
-
-    public Stream<JsoupParser> getNewsParsers() {
-
-        return EnumSet.allOf(Website.class).stream().map(site -> site.getParser());
-
     }
 
     @Override
@@ -117,8 +89,4 @@ public class ArticleServiceImpl implements ArticleService {
         return getAll();
     }
 
-    @Override
-    public void save(Article article) {
-        repo.save(article);
-    }
 }

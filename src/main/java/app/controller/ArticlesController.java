@@ -25,7 +25,6 @@ public class ArticlesController {
 
     private final ArticleService articleService;
     private final UserService userService;
-
     private static List<Website> disabled = new ArrayList<>();
 
 

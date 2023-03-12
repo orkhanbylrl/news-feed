@@ -18,6 +18,7 @@ import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -112,16 +113,13 @@ public class UserController {
     }
 
     @PostMapping("/forgot_handler")
-    public void forgot_handler(@ModelAttribute @Valid ForgotPassForm passFrom, BindingResult result, HttpServletRequest rq)  {
+    public String forgot_handler(@ModelAttribute @Valid ForgotPassForm passFrom, BindingResult result, HttpServletRequest rq)  {
         String email = passFrom.getEmail();
         if(userService.isUserExist(email)){
-
             User user = userService.getUser(email).get();
             String token = UUID.randomUUID().toString();
-
             tokenService.createToken(user, token);
             String link = Utility.getSiteURL(rq) + "/user/reset_password?token=" + token;
-
             String subject = "Email for reset password";
             String body = Utility.setBody(link);
 
@@ -131,6 +129,7 @@ public class UserController {
                 throw new MessageFailedException(e + "error while sending message");
             }
         }
+        return "redirect:/user/login";
     }
 
     @GetMapping("/reset_password")
@@ -149,6 +148,7 @@ public class UserController {
 
     }
 
+    @Transactional
     @PostMapping("/handle_reset")
     public String handle_reset(@ModelAttribute @Valid UserResPasForm userResPas, BindingResult result, Model model){
         if(result.hasErrors()){
@@ -157,7 +157,6 @@ public class UserController {
         }
 
         User user = tokenService.getUser(userResPas.getToken());
-        System.out.println("user " + user);
         user.setPassword(encoder.encode(userResPas.getPassword()));
         userService.saveUser(user);
         tokenService.deleteToken(user);
